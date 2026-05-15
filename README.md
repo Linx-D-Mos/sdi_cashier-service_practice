@@ -5,7 +5,7 @@ It serves as a Proof of Concept (PoC) for event-driven architecture.
 
 ## 🛠 Tech Stack
 
-* **Framework:** Laravel 13
+* **Framework:** Laravel 12
 * **Language:** PHP 8.4
 * **Message Broker:** Apache Kafka 3.7.2
 * **Database:** PostgreSQL
