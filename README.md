@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -56,3 +57,17 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+=======
+# sdi_cashier-service_practice
+This project was developed to practice and implement Laravel-Kafka integration, specifically aimed at resolving connectivity challenges within a corporate application
+
+It serves as a Proof of Concept (PoC) for event-driven architecture.
+
+## 🛠 Tech Stack
+
+* **Framework:** Laravel 12
+* **Language:** PHP 8.4
+* **Message Broker:** Apache Kafka 3.7.2
+* **Database:** PostgreSQL
+* **Environment:** Laravel Sail (Docker)
+>>>>>>> 11335dfd1e39460fd05851ed12b9665398867537
