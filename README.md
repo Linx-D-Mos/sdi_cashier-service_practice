@@ -70,4 +70,3 @@ It serves as a Proof of Concept (PoC) for event-driven architecture.
 * **Message Broker:** Apache Kafka 3.7.2
 * **Database:** PostgreSQL
 * **Environment:** Laravel Sail (Docker)
->>>>>>> 11335dfd1e39460fd05851ed12b9665398867537
