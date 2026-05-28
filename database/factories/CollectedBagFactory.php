@@ -18,7 +18,10 @@ class CollectedBagFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'bag_id' => $this->faker->unique()->numberBetween(1000, 9999),
+            'collection_stop_id' => \App\Models\CollectionStop::factory(),
+            'status' => $this->faker->randomElement(['collected', 'pending', 'failed']),
+            'collected_at' => $this->faker->dateTimeBetween('-1 week', 'now'),
         ];
     }
 }

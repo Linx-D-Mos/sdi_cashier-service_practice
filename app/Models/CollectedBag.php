@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Enum\BagReconciliationStatus;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class CollectedBag extends Model
 {
     /** @use HasFactory<\Database\Factories\CollectedBagFactory> */
-    use HasFactory;
+    use HasFactory, HasUuids;
     protected $fillable = [
         'id',
         'collection_stop_id',

@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Kafka\Handlers\RouteStopCheckedInHandler;
 use Illuminate\Support\ServiceProvider;
+use Junges\Kafka\Facades\Kafka;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
     }
 }

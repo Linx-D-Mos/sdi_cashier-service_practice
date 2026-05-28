@@ -10,7 +10,11 @@ class Store extends Model
     /** @use HasFactory<\Database\Factories\StoreFactory> */
     use HasFactory;
     protected $fillable = [
+
         'name',
     ];
-
+    public function collectionStops()
+    {
+        return $this->hasMany(CollectionStop::class);
+    }
 }

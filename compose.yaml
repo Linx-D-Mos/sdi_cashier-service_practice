@@ -6,6 +6,7 @@ services:
             args:
                 WWWGROUP: '${WWWGROUP}'
         image: 'sail-8.4/app'
+        container_name: 'sdi_cashiers_app'
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -22,10 +23,11 @@ services:
         networks:
             - sail
         depends_on:
-            - pgsql
+            - pgsql_cashiers
             - redis
-    pgsql:
+    pgsql_cashiers:
         image: 'postgres:18-alpine'
+        container_name: 'sdi_cashiers_pgsql'
         ports:
             - '${FORWARD_DB_PORT:-5432}:5432'
         environment:
@@ -51,6 +53,7 @@ services:
             timeout: 5s
     redis:
         image: 'redis:alpine'
+        container_name: 'sdi_cashiers_redis'
         ports:
             - '${FORWARD_REDIS_PORT:-6379}:6379'
         volumes:
