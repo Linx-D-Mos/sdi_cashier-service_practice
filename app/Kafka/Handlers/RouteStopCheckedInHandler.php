@@ -3,6 +3,7 @@
 namespace App\Kafka\Handlers;
 
 use App\Enum\CollectionStopStatus;
+use App\Events\RouteStopArrived;
 use App\Models\CollectionStop;
 use App\Models\Store; // <-- Aseguramos el uso del modelo Store local
 use Carbon\Carbon;
@@ -16,6 +17,7 @@ class RouteStopCheckedInHandler
     {
         try {
             $body = $message->getBody();
+            $emittedAt = $body['emitted_at'] ?? null;
             $attributes = $body['payload']['attributes'] ?? null;
 
             if (! $attributes) {
@@ -34,9 +36,9 @@ class RouteStopCheckedInHandler
 
             $store = Store::find($externalStoreId);
 
-            if(! $store){
+            if (! $store) {
                 $storeNameFallback = $body['payload']['relationships']['store']['name']
-                ?? "Tienda Externa ID {$externalStoreId}";
+                    ?? "Tienda Externa ID {$externalStoreId}";
 
                 $store = new Store();
                 $store->id = (int) $externalStoreId;
@@ -57,9 +59,15 @@ class RouteStopCheckedInHandler
                     'checked_in_at' => Carbon::parse($arrivalTime),
                 ]
             );
+            $timestampAlert = $emittedAt ?? $arrivalTime ?? now()->toIso8601String();
+
+            RouteStopArrived::dispatch(
+                $externalStoreId,
+                'IN_PROGRESS',
+                $timestampAlert
+            );
 
             Log::info("Kafka [route_stop.checked_in]: Parada externa {$externalRouteStopId} procesada con éxito.");
-
         } catch (Exception $e) {
             // Capturamos cualquier fallo inesperado para evitar que el demonio de Kafka muera en producción
             Log::critical('Kafka [route_stop.checked_in]: Error catastrófico en el procesamiento del evento.', [
