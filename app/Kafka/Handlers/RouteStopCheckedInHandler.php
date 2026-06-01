@@ -20,11 +20,11 @@ class RouteStopCheckedInHandler
             $emittedAt = $body['emitted_at'] ?? null;
             $attributes = $body['payload']['attributes'] ?? null;
 
-            if (! $attributes) {
+            if ( ($body['payload']['type']) !== 'route_stop.checked_in' || !$attributes) {
                 Log::warning('Kafka [route_stop.checked_in]: Estructura de payload inválida.', ['body' => $body]);
                 return;
             }
-
+            Log::info("Kafka [{$body['payload']['type']}]: Iniciando procesamiento de evento.", ['type' => $body['payload']['type']]);
             $externalRouteStopId = $attributes['route_stop_id'] ?? null;
             $externalStoreId = $attributes['store_id'] ?? null;
             $arrivalTime = $attributes['arrival_time'] ?? null;

@@ -8,3 +8,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('store.{storeId}', function ($user, $storeId){
     return (int) $user->store_id === (int) $storeId;
 });
+Broadcast::channel('vault.{storeId}', function ($user, $storeId){
+    return (int) $user->store_id === (int) $storeId;
+});

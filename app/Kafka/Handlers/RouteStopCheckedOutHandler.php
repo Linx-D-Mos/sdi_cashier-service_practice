@@ -3,6 +3,7 @@
 namespace App\Kafka\Handlers;
 
 use App\Enum\CollectionStopStatus;
+use App\Events\CollectionBagsReceived;
 use App\Models\CollectionStop;
 use App\Models\Store;
 use Carbon\Carbon;
@@ -61,6 +62,10 @@ class RouteStopCheckedOutHandler
                         ]
                     );
                 }
+                CollectionBagsReceived::dispatch(
+                    (int) $externalStoreId,
+                    $collections
+                );
             });
 
             Log::info("Kafka [route_stop.checked_out]: Procesadas con éxito " . count($collections) . " tulas para la parada {$externalRouteStopId}.");

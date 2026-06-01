@@ -3,14 +3,18 @@
 use App\Enum\BagReconciliationStatus;
 use App\Kafka\Handlers\RouteStopCheckedOutHandler;
 use App\Enum\CollectionStopStatus;
+use App\Events\CollectionBagsReceived;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Junges\Kafka\Message\ConsumedMessage;
 
-uses(RefreshDatabase::class);
-
+beforeEach(function () {
+    // 🔍 Falkeamos el evento para capturarlo en la capa de transporte
+    Event::fake([CollectionBagsReceived::class]);
+});
 it('debe procesar el check-out e ingresar de forma atomica el listado 1:N de tulas', function () {
     // ARRANGE: Payload exacto generado por tu RouteStopCheckedOutMessage del productor
+
     $mockPayload = [
         'event_id' => 'fe90c345-4221-4d39-a681-7928cb521990',
         'emitted_at' => '2026-05-29T15:00:00Z',
@@ -81,4 +85,11 @@ it('debe procesar el check-out e ingresar de forma atomica el listado 1:N de tul
         'packages_amount' => 1,
         'reconciliation_status' => BagReconciliationStatus::PENDING->value
     ]);
+    Event::assertDispatched(CollectionBagsReceived::class, function ($event) {
+        // Validamos quirúrgicamente que el evento vaya con el Store correcto y la data 1:N completa
+        return (int) $event->storeId === 4
+            && count($event->bags) === 2
+            && $event->bags[0]['bag_id'] === 'BAG-A1'
+            && (int) $event->bags[0]['package_amount'] === 3;
+    });
 });
