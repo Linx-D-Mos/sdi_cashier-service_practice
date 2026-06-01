@@ -34,7 +34,7 @@ class RouteStopArrived implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel("store.{$this->storeId}"),
+            new PrivateChannel("store.{$this->storeId}"),
         ];
     }
 

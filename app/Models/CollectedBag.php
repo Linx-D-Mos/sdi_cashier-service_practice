@@ -15,9 +15,9 @@ class CollectedBag extends Model
         'id',
         'collection_stop_id',
         'external_collection_id',
-        'bag_identifier',
-        'lock_identifier',
-        'real_packages_amount',
+        'bag_id',
+        'lock_id',
+        'packages_amount',
         'reconciliation_status',
     ];
 
@@ -25,7 +25,7 @@ class CollectedBag extends Model
     {
         return [
             'reconciliation_status' => BagReconciliationStatus::class,
-            'real_packages_amount' => 'integer',
+            'packages_amount' => 'integer',
         ];
     }
 
