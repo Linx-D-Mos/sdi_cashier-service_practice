@@ -53,7 +53,7 @@ class CollectionBagsReceived implements ShouldBroadcast
                 'external_collection_id' => $bag['id'] ?? $bag['external_collection_id'],
                 'bag_id' => $bag['bag_id'],
                 'lock_id' => $bag['lock_id'],
-                'packages_amount' => (int) $bag['package_amount'],
+                'packages_amount' => (int) $bag['packages_amount'],
                 'status' => CollectionStopStatus::DELIVERED,
             ])->toArray(),
         ];

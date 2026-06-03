@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\CollectedBag;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -43,3 +44,23 @@ Route::get('/sandbox-vault', function () {
     // 3. Renderizamos la nueva vista dedicada
     return view('sandbox-vault');
 })->middleware(['web']);
+
+Route::get('/sandbox-reconcile', function () {
+    $user = User::where('email', 'cajera.tienda4@sdi.com')->first();
+    if (! $user) {
+        $user = new User();
+        $user->name = 'Cajera de Pruebas Store 4';
+        $user->email = 'cajera.tienda4@sdi.com';
+        $user->password = bcrypt('password_secreto');
+        $user->store_id = 4; // <-- Asignación explícita inquebrantable
+        $user->save();
+    }
+    Auth::login($user);
+    $bags = CollectedBag::query()
+        ->whereHas('collectionStop', function ($query) {
+            $query->where('store_id', 4);
+        })
+        ->orderBy('created_at', 'desc')
+        ->get();
+    return view('sandbox-reconcile', ['initialBags' => $bags]);
+});

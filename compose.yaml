@@ -23,6 +23,7 @@ services:
             - '.:/var/www/html'
         networks:
             - sail
+            - sdi-fintech-network
         depends_on:
             - pgsql_cashiers
             - redis
@@ -70,8 +71,9 @@ services:
             timeout: 5s
 networks:
     sail:
+        driver: bridge # 🔍 CORRECCIÓN: Declarada para permitir aislamiento de BD y Redis
+    sdi-fintech-network:
         external: true
-        name: cash-control-api_sail
 volumes:
     sail-pgsql:
         driver: local

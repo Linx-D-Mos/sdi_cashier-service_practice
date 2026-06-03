@@ -57,7 +57,7 @@ class RouteStopCheckedOutHandler
                         [
                             'bag_id' => $bagData['bag_id'],
                             'lock_id' => $bagData['lock_id'],
-                            'packages_amount' => (int) $bagData['package_amount'],
+                            'packages_amount' => (int) $bagData['packages_amount'],
 
                         ]
                     );

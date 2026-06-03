@@ -1,50 +1,10 @@
-<!DOCTYPE html>
-<html lang="es" class="h-full bg-slate-950 text-slate-100">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Bóveda Sandbox // Terminal de Supervisión de Bóveda</title>
+@extends('layouts.sandbox')
 
-    <!-- Google Fonts: Instrument Sans (Sans-serif principal) + JetBrains Mono para logs/cifras -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+@section('title', 'Bóveda Sandbox // Terminal de Supervisión de Bóveda')
+@section('body_class', 'tech-grid')
 
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/js/app.js'])
-    @else
-        <script style="display:none">console.warn('Vite asset bundle no detectado en producción/hot runtime.');</script>
-    @endif
-    <!-- Tailwind CSS (Vía CDN de Fallback para pruebas y entorno Sandbox) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Instrument Sans"', 'sans-serif'],
-                        mono: ['"JetBrains Mono"', 'monospace'],
-                    }
-                }
-            }
-        }
-    </script>
+@section('content')
 
-    <!-- Alpine.js CDN (Garantiza reactividad inmediata) -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-    <!-- Estilo de grilla técnica para el fondo (Estética Sandbox) -->
-    <style>
-        [x-cloak] { display: none !important; }
-
-        .tech-grid {
-            background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.02) 1px, transparent 0);
-            background-size: 20px 20px;
-        }
-    </style>
-</head>
-<body class="h-full font-sans antialiased selection:bg-slate-800 selection:text-slate-200 tech-grid">
 
     <!-- Contenedor Principal bajo Alpine.js -->
     <div x-data="vaultSupervisor({ storeId: {{ $storeId ?? 4 }} })"
@@ -362,5 +322,4 @@
             }));
         });
     </script>
-</body>
-</html>
+@endsection
